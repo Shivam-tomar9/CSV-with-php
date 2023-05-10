@@ -26,17 +26,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $sizes[] = $row['size'];
     }
   }
-
+//The script sets the filename of the CSV file to be 
+// downloaded based on the selected category and sets the appropriate headers for a CSV file.
   $filename = $category . '_sizes.csv';
   header('Content-Type: text/csv');
   header('Content-Disposition: attachment; filename="' . $filename . '";');
-
+  //The script opens a file pointer to the output stream using the fopen() function.
   $output = fopen('php://output', 'w');
   $header = array('ori_part_no', 'part_no', 'TOTAL QTY', 'TOTAL AMT');
   foreach ($sizes as $size) {
     $header[] = "size"." ".$size;
   }
   $count=count($sizes);
+  //The script writes each row of data to the CSV file using the fputcsv() function.
   fputcsv($output, $header);
   
   foreach ($sizes as $size) {
@@ -121,6 +123,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         const category = document.querySelector('#category').value;
         generateCSV(category);
       });
+//Finally, the script generates an HTML form that contains a drop-down menu with the list of 
+//categories retrieved from the database.
+//When the user selects a category and submits the form, the 
+ //script calls a JavaScript function that sends an AJAX request to the PHP 
+ //script with the selected category as a POST parameter. When the AJAX request is 
+//complete, the script creates a link to download the generated CSV file and clicks on the link to trigger the download.
     </script>
   </body>
 </html>
+
